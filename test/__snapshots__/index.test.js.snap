@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`line ranges 1`] = `
+"\`\`\` {.cpp .wtf}
+// https://eosio.stackexchange.com/a/1349/118
+#include \\"./cleanup/cleanup.cpp\\"
+#include \\"./fsm/fsm.cpp\\"
+#include \\"./utils/utils.cpp\\"
+
+using namespace eosio;
+using namespace std;
+
+// NOT IN FILE: some explanation for the next section
+void cryptoship::p1_deposit(name player, const asset &quantity) {
+  require_auth(player);
+  // this action should be called in a transaction after the \\"create\\" action
+  // only then we can guarantee that the last created game is the opened game
+  auto latest_game = games.end();
+  latest_game--;
+
+  eosio_assert(latest_game != games.end(), \\"must create a game first\\");
+  eosio_assert(latest_game->player1 == player, \\"must pay for your own game\\");
+  eosio_assert(latest_game->bet_amount_per_player == quantity,
+               \\"game has a different bet amount\\");
+
+  fsm::automaton machine(latest_game->game_data);
+  machine.p1_deposit();
+
+  games.modify(latest_game, player, [&](game &g) {
+    g.expires_at = time_point_sec(now() + EXPIRE_OPEN);
+    g.game_data = machine.data;
+  });
+}
+\`\`\`
+"
+`;
