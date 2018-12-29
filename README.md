@@ -8,7 +8,7 @@ A filter for pandoc to include code sections from a file.
 npm install -g pandoc-code-file-filter
 ```
 
-Make sure the global npm modules are in your `$PATH`
+Make sure the global npm modules are in your `$PATH`.
 Then you can use the filter with the `--filter` option
 
 ```
@@ -17,7 +17,7 @@ pandoc <args> --filter pandoc-code-file-filter
 
 ## Features
 
-In contrast to [pandoc-include-code](https://github.com/owickstrom/pandoc-include-code) you can include multiple sections and use string macthing to define sections.
+In contrast to [pandoc-include-code](https://github.com/owickstrom/pandoc-include-code), this filter allows to include multiple sections and define sections using string matching.
 
 Sections can be defined either by:
 
@@ -44,6 +44,9 @@ Sections are defined in the body of the code block line by line.
 3-20
 22-25
 /function hello()/ - /return/
+
+
+/slashes must be escaped! \/\/ code comment/ - /return/
 ``` 
 ````
 

@@ -1,13 +1,16 @@
 // match line numbers 232-5353
 // or regexp /asdf/ - /wasd/
 // and with offsets /asdf/-5 - /wasd/+2
-const sectionRegEx = /^\s*(\d*|\/.*\/)([+-]\d*)?\s*-\s*(\d*|\/.*\/)([+-]\d*)?\s*$/i;
+const sectionRegEx = /^\s*(\d*|\/([^/]|(?<=\\)\/)*\/)([+-]\d*)?\s*-\s*(\d*|\/([^/]|(?<=\\)\/)*\/)([+-]\d*)?\s*$/i;
 
 const isRegEx = marker => marker.startsWith(`/`);
 
 const getMatchingLineNumber = (lines, regEx, start = 0) => {
   function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+    // unescape the slashes first as user had to escape them
+    // then escape the user string so the RegExp constructor doesn't make a regex out of it
+    // could also just use regular string matching, but maybe we need to extend this in the future
+    return string.replace(/\\\//g, "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
   }
 
   // remove beginning and closing slash
@@ -30,8 +33,8 @@ const extractSectionFactory = lines => sectionDefinition => {
   // empty section definition or text that does not match a section definition is just returned the same way
   if (!matches) return sectionDefinition;
 
-  const [_, begin, beginOffset, end, endOffset] = matches;
-  //   console.warn(begin, end, beginOffset, endOffset);
+  const [_, begin, __, beginOffset, end, ___, endOffset] = matches;
+  console.warn(begin, end, beginOffset, endOffset);
 
   let beginLineNumber = null;
   let endLineNumber = null;

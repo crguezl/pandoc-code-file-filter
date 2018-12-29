@@ -26,3 +26,8 @@ test("no dedent", () => {
   const output = execPandocOnFile(`no-dedent.md`);
   expect(output).toMatchSnapshot();
 });
+
+test("works with (escaped) slashes in regex", () => {
+  const output = execPandocOnFile(`slashes.md`);
+  expect(output).toMatchSnapshot();
+});

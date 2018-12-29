@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const pandoc = require("pandoc-filter-promisified");
 const dedent = require(`./dedent`);
 const extractSectionFactory = require("./extractSection");
@@ -23,6 +24,13 @@ function filterOutOwnHeaders(headers) {
 }
 
 function replaceContentSections(contentString, config) {
+  if (!fs.existsSync(config.include))
+    throw new Error(
+      `pandoc-code-file-filter: File does not exist: "${path.resolve(
+        config.include
+      )}"`
+    );
+
   const codeLines = fs.readFileSync(config.include, "utf8").split(`\n`);
   const sectionDefinitions = contentString.split(`\n`);
 

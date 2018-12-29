@@ -103,3 +103,19 @@ function xor(a,b) {
 \`\`\`
 "
 `;
+
+exports[`works with (escaped) slashes in regex 1`] = `
+"\`\`\` {.javascript}
+// match line numbers 232-5353
+// or regexp /asdf/ - /wasd/
+const sectionRegexp = /^\\\\s*(\\\\d*|\\\\/.*\\\\/)\\\\s*-\\\\s*(\\\\d*|\\\\/.*\\\\/)\\\\s*$/i
+
+const isRegExp = marker => marker.startsWith(\`/\`)
+
+const extractSectionFactory = lines => sectionDefinition => {
+    const matches = sectionDefinition.match(sectionRegEx)
+
+    // empty section definition or text that does not match a section definition is just returned the same way
+\`\`\`
+"
+`;
