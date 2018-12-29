@@ -1,35 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`line ranges 1`] = `
-"\`\`\` {.cpp .wtf}
-// https://eosio.stackexchange.com/a/1349/118
-#include \\"./cleanup/cleanup.cpp\\"
-#include \\"./fsm/fsm.cpp\\"
-#include \\"./utils/utils.cpp\\"
+"\`\`\` {.javascript}
+// match line numbers 232-5353
+// or regexp /asdf/ - /wasd/
+const sectionRegexp = /^\\\\s*(\\\\d*|\\\\/.*\\\\/)\\\\s*-\\\\s*(\\\\d*|\\\\/.*\\\\/)\\\\s*$/i
 
-using namespace eosio;
-using namespace std;
+const isRegExp = marker => marker.startsWith(\`/\`)
 
 // NOT IN FILE: some explanation for the next section
-void cryptoship::p1_deposit(name player, const asset &quantity) {
-  require_auth(player);
-  // this action should be called in a transaction after the \\"create\\" action
-  // only then we can guarantee that the last created game is the opened game
-  auto latest_game = games.end();
-  latest_game--;
+if(isRegExp(end)) {
+    endLineNumber = lines.length - 1;
+} else if (end === \`\`) {
+    // can leave out end marker
+    endLineNumber = lines.length - 1;
+} else {
+    endLineNumber = parseInt(end, 10);
+}
+\`\`\`
+"
+`;
 
-  eosio_assert(latest_game != games.end(), \\"must create a game first\\");
-  eosio_assert(latest_game->player1 == player, \\"must pay for your own game\\");
-  eosio_assert(latest_game->bet_amount_per_player == quantity,
-               \\"game has a different bet amount\\");
+exports[`no dedent 1`] = `
+"\`\`\` {.javascript}
+    const matches = sectionDefinition.match(sectionRegEx)
 
-  fsm::automaton machine(latest_game->game_data);
-  machine.p1_deposit();
+    // empty section definition or text that does not match a section definition is just returned the same way
+    if(!matches) return sectionDefinition
+\`\`\`
+"
+`;
 
-  games.modify(latest_game, player, [&](game &g) {
-    g.expires_at = time_point_sec(now() + EXPIRE_OPEN);
-    g.game_data = machine.data;
-  });
+exports[`regex sections 1`] = `
+"\`\`\` {.javascript}
+const extractSectionFactory = lines => sectionDefinition => {
+    const matches = sectionDefinition.match(sectionRegEx)
+
+    // empty section definition or text that does not match a section definition is just returned the same way
+    if(!matches) return sectionDefinition
+
+    const [_, begin, end] = matches;
+    console.warn(begin, end);
+
+    let beginLineNumber = null;
+    let endLineNumber = null;
+
+    if(isRegExp(begin)) {
+
+    } else {
+        beginLineNumber = parseInt(begin, 10);
+    }
+
+    if(isRegExp(end)) {
+        endLineNumber = lines.length - 1;
+    } else if (end === \`\`) {
+        // can leave out end marker
+        endLineNumber = lines.length - 1;
+    } else {
+        endLineNumber = parseInt(end, 10);
+    }
+
+    return lines.slice(beginLineNumber - 1, endLineNumber).join(\`\\\\n\`)
+\`\`\`
+"
+`;
+
+exports[`section offsets 1`] = `
+"\`\`\` {.javascript}
+const extractSectionFactory = lines => sectionDefinition => {
+    const matches = sectionDefinition.match(sectionRegEx)
+
+    // empty section definition or text that does not match a section definition is just returned the same way
+    if(!matches) return sectionDefinition
+
+    const [_, begin, end] = matches;
+    console.warn(begin, end);
+
+    let beginLineNumber = null;
+    let endLineNumber = null;
+
+    if(isRegExp(begin)) {
+
+    } else {
+        beginLineNumber = parseInt(begin, 10);
+    }
+
+    if(isRegExp(end)) {
+        endLineNumber = lines.length - 1;
+    } else if (end === \`\`) {
+        // can leave out end marker
+        endLineNumber = lines.length - 1;
+    } else {
+        endLineNumber = parseInt(end, 10);
+    }
+
+    return lines.slice(beginLineNumber - 1, endLineNumber).join(\`\\\\n\`)
+}
+
+function xor(a,b) {
+    return a ^ b
 }
 \`\`\`
 "

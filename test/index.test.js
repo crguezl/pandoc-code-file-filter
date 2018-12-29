@@ -9,6 +9,20 @@ function execPandocOnFile(fileName) {
 
 test("line ranges", () => {
   const output = execPandocOnFile(`lines.md`);
-  console.log(output);
+  expect(output).toMatchSnapshot();
+});
+
+test("regex sections", () => {
+  const output = execPandocOnFile(`regex.md`);
+  expect(output).toMatchSnapshot();
+});
+
+test("section offsets", () => {
+  const output = execPandocOnFile(`offset.md`);
+  expect(output).toMatchSnapshot();
+});
+
+test("no dedent", () => {
+  const output = execPandocOnFile(`no-dedent.md`);
   expect(output).toMatchSnapshot();
 });

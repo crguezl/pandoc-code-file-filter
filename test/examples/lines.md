@@ -1,7 +1,7 @@
 
-``` {.cpp .wtf include=./test/examples/test.cpp}
-3-9
+``` {.javascript include=./test/examples/example.js}
+1-5
 
 // NOT IN FILE: some explanation for the next section
-54-73
+25-32
 ``` 

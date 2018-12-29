@@ -17,28 +17,37 @@ pandoc <args> --filter pandoc-code-file-filter
 
 ## Features
 
-In contrast to [pandoc-code-filter]() you can include multiple sections.
+In contrast to [pandoc-include-code](https://github.com/owickstrom/pandoc-include-code) you can include multiple sections and use string macthing to define sections.
 
 Sections can be defined either by:
 
 * **line numbers**: Simply include a section consisting of a range of line numbers: `3-20`, `10-` (10 to end of file)
-* **regex**: Include a section beginning at the first match of a regex up to the first match of the second regex:
+* **string matching**: Include a section beginning at the first match of a string up to the first match of the second string:
     ```
     /function hello()/ - /return/
     ```
+* **offsets**: You can combine string matching with line offsets.
+    First the line number matching the string is determined and a positive or negative offset is added to it.
+    ```
+    // will span a section from 5 lines before `function hello()` to the line after the `return` match
+    /function hello()/-5 - /return/+1
+    ```
+* **dedent**: Automatically dedents common whitespace at the beginning of the section's lines. Can be turned off by passing `dedent=false`.
 
-In Markdown you create a code block and use curly braces to define the include path.
+## Examples
+
+In Markdown you create a code block and use curly braces to define the include path (relative to where pandoc is invoked from).
 Sections are defined in the body of the code block line by line.
 
 ````
-```{include=test.cpp}
+```{include=test.cpp dedent=false}
 3-20
 22-25
 /function hello()/ - /return/
 ``` 
 ````
 
-You can still add classes to the code block:
+You can still add **classes** to the code block:
 
 ````
 ```{include=test.cpp .cpp}
@@ -51,13 +60,13 @@ You can still add classes to the code block:
 ``` 
 ````
 
-You can also write code, new lines or comments in between the sections:
+You can also **write code, new lines or comments in between the sections**:
 
 ````
 ```{include=test.cpp .cpp}
 3-20
 
-// some comment introducing the next section
-/function hello()/ - /return/
+// some comment introducing the next section, this will also be in the final output
+/function hello()/ - /return/+1
 ``` 
 ````
