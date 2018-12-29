@@ -34,7 +34,7 @@ const extractSectionFactory = lines => sectionDefinition => {
   if (!matches) return sectionDefinition;
 
   const [_, begin, __, beginOffset, end, ___, endOffset] = matches;
-  console.warn(begin, end, beginOffset, endOffset);
+  // console.warn(begin, end, beginOffset, endOffset);
 
   let beginLineNumber = null;
   let endLineNumber = null;

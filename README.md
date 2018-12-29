@@ -73,3 +73,5 @@ You can also **write code, new lines or comments in between the sections**:
 /function hello()/ - /return/+1
 ``` 
 ````
+
+> Note that if you want to use slashes in the string matching they need to be escaped: `\/`
