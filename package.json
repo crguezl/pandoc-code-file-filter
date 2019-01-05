@@ -1,6 +1,6 @@
 {
   "name": "pandoc-code-file-filter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A filter for pandoc to include sections of code from a file",
   "main": "src/index.js",
   "scripts": {
