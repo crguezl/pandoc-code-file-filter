@@ -47,7 +47,7 @@ function replaceContentSections(contentString, config) {
 function getConfig(headers) {
   const [_, classes, keyValuePairs] = headers;
 
-  const config = defaultConfig;
+  const config = { ...defaultConfig };
   Object.keys(config).forEach(configKey => {
     const keyValuePair = keyValuePairs.find(
       ([key, value]) => key === configKey
