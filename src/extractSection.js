@@ -49,7 +49,7 @@ const extractSectionFactory = lines => sectionDefinition => {
     endLineNumber = getMatchingLineNumber(lines, end, beginLineNumber);
   } else if (end === ``) {
     // can leave out end marker
-    endLineNumber = lines.length - 1;
+    endLineNumber = lines.length;
   } else {
     endLineNumber = parseInt(end, 10);
   }
