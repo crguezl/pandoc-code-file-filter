@@ -75,3 +75,7 @@ You can also **write code, new lines or comments in between the sections**:
 ````
 
 > Note that if you want to use slashes in the string matching they need to be escaped: `\/`
+
+## References
+
+See the tutorial [How to write pandoc plugins in Nodejs](https://cmichel.io/how-to-write-pandoc-plugins-in-nodejs/)

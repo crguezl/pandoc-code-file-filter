@@ -4,7 +4,9 @@
   "description": "A filter for pandoc to include sections of code from a file",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "example": "pandoc -s --filter ./bin/filter.js test/examples/lines.md -o salida.html",
+    "open": "open salida.html"
   },
   "keywords": [
     "pandoc",
